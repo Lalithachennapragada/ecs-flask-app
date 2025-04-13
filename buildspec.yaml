@@ -5,8 +5,8 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 597088046551.dkr.ecr.us-east-1.amazonaws.com
-      - REPO_URI=597088046551.dkr.ecr.us-east-1.amazonaws.com
-      - IMAGE_TAG=d4a80fa  # Use the image tag you want
+      - REPO_URI=597088046551.dkr.ecr.us-east-1.amazonaws.com/chennapragada-ecs-app
+      - IMAGE_TAG=d4a80fa
       - echo REPO_URI=$REPO_URI
       - echo IMAGE_TAG=$IMAGE_TAG
 
@@ -14,17 +14,17 @@ phases:
     commands:
       - echo Building Docker image...
       - docker build -t $REPO_URI:$IMAGE_TAG .
-      - docker tag $REPO_URI:$IMAGE_TAG $REPO_URI:latest  # Optional, but useful for convenience
+      - docker tag $REPO_URI:$IMAGE_TAG $REPO_URI:latest
       - echo Image built successfully.
 
   post_build:
     commands:
       - echo Pushing Docker image...
       - docker push $REPO_URI:$IMAGE_TAG
-      - docker push $REPO_URI:latest  # Optional, depending on your need
+      - docker push $REPO_URI:latest
       - printf '[{"name":"flask-app","imageUri":"%s"}]' $REPO_URI:$IMAGE_TAG > imagedefinitions.json
       - echo Image pushed to ECR.
-      
+
 artifacts:
   files:
     - imagedefinitions.json
