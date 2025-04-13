@@ -4,8 +4,8 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 597088046551.dkr.ecr.us-east-1.amazonaws.com/chennapragada-ecs-app:d4a80fa
-      - REPO_URI=597088046551.dkr.ecr.us-east-1.amazonaws.com/chennapragada-ecs-app:d4a80fa
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 597088046551.dkr.ecr.us-east-1.amazonaws.com
+      - REPO_URI=597088046551.dkr.ecr.us-east-1.amazonaws.com
       - IMAGE_TAG=d4a80fa  # Use the image tag you want
       - echo REPO_URI=$REPO_URI
       - echo IMAGE_TAG=$IMAGE_TAG
