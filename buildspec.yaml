@@ -22,7 +22,7 @@ phases:
       - echo Pushing Docker image...
       - docker push $REPO_URI:$IMAGE_TAG  # Push the image with the specific tag
       - docker push $REPO_URI:latest  # Push the 'latest' tagged image
-      - printf '[{"name":"flask-container","imageUri":"%s"}]' $REPO_URI:$IMAGE_TAG > imagedefinitions.json  # Create imagedefinitions.json
+      - printf '[{"name":"chenna-container","imageUri":"%s"}]' $REPO_URI:$IMAGE_TAG > imagedefinitions.json  # Create imagedefinitions.json
       - echo Image pushed to ECR.
 
 artifacts:
