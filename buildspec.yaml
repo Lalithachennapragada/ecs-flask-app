@@ -5,7 +5,7 @@ phases:
     commands:
       - echo Logging in to Amazon ECR...
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 597088046551.dkr.ecr.us-east-1.amazonaws.com
-      - REPO_URI=597088046551.dkr.ecr.us-east-1.amazonaws.com/chennapragada-ecs-app
+      - REPO_URI=597088046551.dkr.ecr.us-east-1.amazonaws.com/chenna-ecr  # Updated repo URI
       - IMAGE_TAG=d4a80fa
       - echo REPO_URI=$REPO_URI
       - echo IMAGE_TAG=$IMAGE_TAG
@@ -13,18 +13,18 @@ phases:
   build:
     commands:
       - echo Building Docker image...
-      - docker build -t $REPO_URI:$IMAGE_TAG .
-      - docker tag $REPO_URI:$IMAGE_TAG $REPO_URI:latest
+      - docker build -t $REPO_URI:$IMAGE_TAG .  # Build the image with the specified tag
+      - docker tag $REPO_URI:$IMAGE_TAG $REPO_URI:latest  # Tag the image as 'latest'
       - echo Image built successfully.
 
   post_build:
     commands:
       - echo Pushing Docker image...
-      - docker push $REPO_URI:$IMAGE_TAG
-      - docker push $REPO_URI:latest
-      - printf '[{"name":"flask-container","imageUri":"%s"}]' $REPO_URI:$IMAGE_TAG > imagedefinitions.json
+      - docker push $REPO_URI:$IMAGE_TAG  # Push the image with the specific tag
+      - docker push $REPO_URI:latest  # Push the 'latest' tagged image
+      - printf '[{"name":"flask-container","imageUri":"%s"}]' $REPO_URI:$IMAGE_TAG > imagedefinitions.json  # Create imagedefinitions.json
       - echo Image pushed to ECR.
 
 artifacts:
   files:
-    - imagedefinitions.json
+    - imagedefinitions.json  # Include the imagedefinitions.json as an artifact
